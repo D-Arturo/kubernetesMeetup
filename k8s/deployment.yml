@@ -1,0 +1,25 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: f5-deployment
+  labels:
+    app: sample
+spec:
+  replicas: 2
+  selector:
+    matchLabels:
+      app: f5-app
+  template:
+    metadata:
+      labels:
+        app: f5-app
+    spec:
+      containers:
+        - name: f5-app-container
+          image: chat-example:latest
+          imagePullPolicy: Never
+          env:
+            - name: PORT
+              value: "3000"
+            - name: RUNNING_ON
+              value: "kubernetes-cluster"
